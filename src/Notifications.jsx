@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { fetchNotifications, markAllNotificationsRead } from '../services/notifications'
-import { useAuth } from '../context/AuthContext'
-import { Button, EmptyState } from '../components/ui'
-import { useToast } from '../hooks/useToast'
-
+import { fetchNotifications, markAllNotificationsRead } from './notifications'
+import { useAuth } from './AuthContext'
+import { Button, EmptyState } from './ui'
+import { useToast } from './useToast'
 export default function Notifications() {
   const { user, configured } = useAuth()
   const { push } = useToast()
