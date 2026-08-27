@@ -3,7 +3,7 @@ import {
   startAfter, updateDoc, deleteDoc, serverTimestamp, increment, where, writeBatch
 } from 'firebase/firestore'
 import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage'
-import { db, storage } from '../firebase/config'
+import { db, storage } from './config'
 
 export async function fetchFeedPage(pageSize = 12, cursor = null) {
   let q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(pageSize))
