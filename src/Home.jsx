@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
-import { fetchFeedPage } from '../services/posts'
-import { fetchActiveStories } from '../services/stories'
-import { isFirebaseConfigured } from '../firebase/config'
-import { useAuth } from '../context/AuthContext'
-import { EmptyState, Skeleton } from '../components/ui'
-import PostCard from '../components/PostCard'
+import { fetchFeedPage } from './posts'
+import { fetchActiveStories } from './stories'
+import { isFirebaseConfigured } from './config'
+import { useAuth } from './AuthContext'
+import { EmptyState, Skeleton } from './ui'
+import PostCard from './PostCard'
 import { Link } from 'react-router-dom'
 
 export default function Home() {
