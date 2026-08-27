@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { doc, getDoc, collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore'
-import { db, isFirebaseConfigured } from '../firebase/config'
-import { useAuth } from '../context/AuthContext'
-import { followUser, unfollowUser, getFollowState } from '../services/follows'
-import { Avatar, Button, EmptyState, Skeleton } from '../components/ui'
-import { useToast } from '../hooks/useToast'
-import { createNotification } from '../services/notifications'
-
+import { db, isFirebaseConfigured } from './config'
+import { useAuth } from './AuthContext'
+import { followUser, unfollowUser, getFollowState } from './follows'
+import { Avatar, Button, EmptyState, Skeleton } from './ui'
+import { useToast } from './useToast'
+import { createNotification } from './notifications'
 export default function UserProfile() {
   const { uid } = useParams()
   const { user } = useAuth()
