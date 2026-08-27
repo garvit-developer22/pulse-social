@@ -1,5 +1,5 @@
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
-import { db } from '../firebase/config'
+import { db } from './config'
 
 export async function createReport({ reporterId, targetType, targetId, reason, details = '' }) {
   await addDoc(collection(db, 'reports'), {
