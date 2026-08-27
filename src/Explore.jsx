@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore'
-import { db, isFirebaseConfigured } from '../firebase/config'
-import { EmptyState, Skeleton } from '../components/ui'
-import { searchUsersByUsername } from '../services/follows'
+import { db, isFirebaseConfigured } from './config'
+import { EmptyState, Skeleton, Input } from './ui'
+import { searchUsersByUsername } from './follows'
 import { Link } from 'react-router-dom'
-import { Input } from '../components/ui'
 
 export default function Explore() {
   const [posts, setPosts] = useState([])
@@ -54,4 +53,4 @@ export default function Explore() {
       </div>
     </div>
   )
-}
+                                 }
