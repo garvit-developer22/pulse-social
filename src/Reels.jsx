@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { collection, getDocs, limit, orderBy, query, where } from 'firebase/firestore'
-import { db, isFirebaseConfigured } from '../firebase/config'
-import { EmptyState } from '../components/ui'
+import { db, isFirebaseConfigured } from './config'
+import { EmptyState } from './ui'
 
 export default function Reels() {
   const [items, setItems] = useState([])
@@ -65,4 +65,4 @@ export default function Reels() {
       })}
     </div>
   )
-}
+                                 }
