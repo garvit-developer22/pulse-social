@@ -10,7 +10,7 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore'
-import { auth, db, isFirebaseConfigured } from '../firebase/config'
+import { auth, db, isFirebaseConfigured } from './config'
 
 const AuthContext = createContext(null)
 
