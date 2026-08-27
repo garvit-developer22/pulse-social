@@ -2,7 +2,7 @@ import {
   doc, getDoc, setDoc, deleteDoc, serverTimestamp, increment, updateDoc,
   collection, query, where, getDocs, limit
 } from 'firebase/firestore'
-import { db } from '../firebase/config'
+import { db } from './config'
 
 export async function followUser(me, targetUid) {
   if (me === targetUid) return
