@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-import { listConversationsFor, getOrCreateConversation, listenMessages, sendMessage } from '../services/messages'
-import { searchUsersByUsername } from '../services/follows'
-import { useAuth } from '../context/AuthContext'
-import { Avatar, Button, EmptyState, Input } from '../components/ui'
-import { useToast } from '../hooks/useToast'
-
+import { listConversationsFor, getOrCreateConversation, listenMessages, sendMessage } from './messages'
+import { searchUsersByUsername } from './follows'
+import { useAuth } from './AuthContext'
+import { Avatar, Button, EmptyState, Input } from './ui'
+import { useToast } from './useToast'
 export default function Messages() {
   const { user, profile, configured } = useAuth()
   const { push } = useToast()
