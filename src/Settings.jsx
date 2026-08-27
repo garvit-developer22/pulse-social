@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { db, isFirebaseConfigured } from './config'
-import { useAuth } from '../context/AuthContext'
-import { Button, Input, Textarea } from '../components/ui'
-import { useToast } from '../hooks/useToast'
-
+import { useAuth } from './AuthContext'
+import { Button, Input, Textarea } from './ui'
+import { useToast } from './useToast'
 export default function Settings() {
   const { logout, profile, user, refreshProfile, configured } = useAuth()
   const { push } = useToast()
