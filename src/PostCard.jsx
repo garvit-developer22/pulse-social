@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Heart, MessageCircle, Send, Bookmark, MoreHorizontal } from 'lucide-react'
 import { Avatar } from './ui'
-import { hasLiked, toggleLike, toggleSave, addComment, fetchComments, deletePost } from '../services/posts'
-import { createNotification } from '../services/notifications'
-import { createReport } from '../services/reports'
-import { useAuth } from '../context/AuthContext'
-import { useToast } from '../hooks/useToast'
+import { hasLiked, toggleLike, toggleSave, addComment, fetchComments, deletePost } from './posts'
+import { createNotification } from './notifications'
+import { createReport } from './reports'
+import { useAuth } from './AuthContext'
+import { useToast } from './useToast'
 import { Link } from 'react-router-dom'
 
 export default function PostCard({ post, onDeleted }) {
