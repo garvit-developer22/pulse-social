@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
-import { db, isFirebaseConfigured } from '../firebase/config'
-import { useAuth } from '../context/AuthContext'
-import { Avatar, Button, EmptyState, Skeleton } from '../components/ui'
+import { db, isFirebaseConfigured } from './config'
+import { useAuth } from './AuthContext'
+import { Avatar, Button, EmptyState, Skeleton } from './ui'
 
 export default function Profile() {
   const { profile, user } = useAuth()
