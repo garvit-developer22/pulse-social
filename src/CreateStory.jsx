@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { createStory } from '../services/stories'
-import { uploadToCloudinary, isCloudinaryConfigured } from '../services/cloudinary'
-import { useAuth } from '../context/AuthContext'
-import { Button, Input } from '../components/ui'
+import { uploadToCloudinary, isCloudinaryConfigured } from './cloudinary'
+import { useAuth } from './AuthContext'
+import { Button, Input } from './ui'
 import { useNavigate } from 'react-router-dom'
-import { useToast } from '../hooks/useToast'
-import { isFirebaseConfigured } from '../firebase/config'
+import { useToast } from './useToast'
+import { isFirebaseConfigured, db } from './config'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 
 export default function CreateStory() {
   const { user, profile, configured } = useAuth()
@@ -23,9 +23,6 @@ export default function CreateStory() {
     setBusy(true)
     try {
       const media = await uploadToCloudinary(file, setProgress)
-      // stories service still expects File for storage — write story doc directly here for cloudinary URL
-      const { addDoc, collection, serverTimestamp } = await import('firebase/firestore')
-      const { db } = await import('../firebase/config')
       const now = Date.now()
       await addDoc(collection(db, 'stories'), {
         authorId: user.uid,
@@ -64,4 +61,4 @@ export default function CreateStory() {
       </Button>
     </div>
   )
-}
+        }
