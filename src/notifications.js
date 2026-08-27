@@ -2,7 +2,7 @@ import {
   addDoc, collection, doc, getDocs, limit, orderBy, query, serverTimestamp,
   updateDoc, where, writeBatch
 } from 'firebase/firestore'
-import { db } from '../firebase/config'
+import { db } from './config'
 
 export async function createNotification({ recipientId, actorId, type, postId = null, message = '' }) {
   if (!recipientId || recipientId === actorId) return
