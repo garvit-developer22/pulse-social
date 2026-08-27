@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore'
-import { db, isFirebaseConfigured } from '../firebase/config'
+import { db, isFirebaseConfigured } from './config'
 import { useAuth } from '../context/AuthContext'
 import { Button, Input, Textarea } from '../components/ui'
 import { useToast } from '../hooks/useToast'
