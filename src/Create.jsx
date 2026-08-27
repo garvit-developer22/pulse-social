@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { createPost } from '../services/posts'
-import { uploadManyToCloudinary, isCloudinaryConfigured } from '../services/cloudinary'
-import { isFirebaseConfigured } from '../firebase/config'
-import { Button, Input, Textarea } from '../components/ui'
-import { useToast } from '../hooks/useToast'
+import { useAuth } from './AuthContext'
+import { createPost } from './posts'
+import { uploadManyToCloudinary, isCloudinaryConfigured } from './cloudinary'
+import { isFirebaseConfigured } from './config'
+import { Button, Input, Textarea } from './ui'
+import { useToast } from './useToast'
 
 export default function Create() {
   const { user, profile } = useAuth()
