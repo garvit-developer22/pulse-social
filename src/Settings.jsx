@@ -4,6 +4,7 @@ import { db, isFirebaseConfigured } from './config'
 import { useAuth } from './AuthContext'
 import { Button, Input, Textarea } from './ui'
 import { useToast } from './useToast'
+
 export default function Settings() {
   const { logout, profile, user, refreshProfile, configured } = useAuth()
   const { push } = useToast()
@@ -53,4 +54,4 @@ export default function Settings() {
       <Button variant="ghost" className="w-full" onClick={() => logout()}>Log out</Button>
     </div>
   )
-}
+                      }
