@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { Button, Input } from '../components/ui'
+import { useAuth } from './AuthContext'
+import { Button, Input } from './ui'
 
 export default function Auth({ mode = 'login' }) {
   const { user, loading, login, signup, loginGoogle, resetPassword, configured } = useAuth()
