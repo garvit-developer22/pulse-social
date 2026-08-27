@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { Home, Compass, PlusSquare, Clapperboard, User, Bell, MessageCircle, Settings } from 'lucide-react'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from './AuthContext'
 
 const item = 'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-pulse-muted hover:bg-white/5 hover:text-pulse-text'
 const active = 'bg-white/10 text-pulse-text'
