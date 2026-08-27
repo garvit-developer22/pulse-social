@@ -2,7 +2,7 @@ import {
   addDoc, collection, doc, getDoc, getDocs, limit, orderBy, query,
   serverTimestamp, setDoc, updateDoc, onSnapshot, where
 } from 'firebase/firestore'
-import { db } from '../firebase/config'
+import { db } from './config'
 
 function conversationId(a, b) {
   return [a, b].sort().join('_')
