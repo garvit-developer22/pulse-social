@@ -3,7 +3,7 @@ import {
   where, setDoc
 } from 'firebase/firestore'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
-import { db, storage } from '../firebase/config'
+import { db, storage } from './config'
 
 const DAY = 24 * 60 * 60 * 1000
 
