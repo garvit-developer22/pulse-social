@@ -59,14 +59,14 @@ export function AuthProvider({ children }) {
 
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u)
-      // Loading band pehle — profile background mein
+      // IMPORTANT: loading pehle band
       setLoading(false)
 
       if (u) {
         ensureUserDoc(u)
           .then((p) => setProfile(p))
           .catch((e) => {
-            console.error(e)
+            console.error('profile error', e)
             setProfile(null)
           })
       } else {
@@ -74,7 +74,6 @@ export function AuthProvider({ children }) {
       }
     })
 
-    // Safety: 8 sec baad loading force band
     const t = setTimeout(() => setLoading(false), 8000)
     return () => {
       unsub()
@@ -98,6 +97,7 @@ export function AuthProvider({ children }) {
         if (displayName) await updateProfile(cred.user, { displayName })
         const p = await ensureUserDoc(cred.user, { username, displayName })
         setProfile(p)
+        return p
       },
       async loginGoogle() {
         if (!auth) throw new Error('Firebase not configured')
@@ -105,6 +105,7 @@ export function AuthProvider({ children }) {
         const cred = await signInWithPopup(auth, provider)
         const p = await ensureUserDoc(cred.user)
         setProfile(p)
+        return p
       },
       async logout() {
         if (!auth) return
@@ -115,8 +116,8 @@ export function AuthProvider({ children }) {
         await sendPasswordResetEmail(auth, email)
       },
       async refreshProfile() {
-        if (!user) return
-        const p = await ensureUserDoc(user)
+        if (!auth?.currentUser) return
+        const p = await ensureUserDoc(auth.currentUser)
         setProfile(p)
       },
     }),
@@ -130,4 +131,4 @@ export function useAuth() {
   const ctx = useContext(AuthContext)
   if (!ctx) throw new Error('useAuth must be used within AuthProvider')
   return ctx
-      }
+  }
