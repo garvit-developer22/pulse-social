@@ -7,6 +7,6 @@ export default function ProtectedRoute({ children }) {
   }
   // If Firebase not configured, allow app shell so developer can see UI
   if (!configured) return children
-  if (!user) return <Navigate to="/login" replace />
+  if (!user) return <Navigate to="/auth" replace />
   return children
 }
