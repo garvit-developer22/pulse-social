@@ -19,12 +19,17 @@ async function ensureUserDoc(user, extra = {}) {
   const ref = doc(db, 'users', user.uid)
   const snap = await getDoc(ref)
   if (!snap.exists()) {
-    const username =
+    const raw =
       extra.username ||
       (user.email ? user.email.split('@')[0] : `user_${user.uid.slice(0, 6)}`)
+    const username =
+      String(raw)
+        .toLowerCase()
+        .replace(/[^a-z0-9_]/g, '')
+        .slice(0, 20) || `user${user.uid.slice(0, 4)}`
     await setDoc(ref, {
       uid: user.uid,
-      username: String(username).toLowerCase().replace(/[^a-z0-9_]/g, '').slice(0, 20) || `user${user.uid.slice(0, 4)}`,
+      username,
       displayName: extra.displayName || user.displayName || username,
       email: user.email || '',
       photoURL: user.photoURL || '',
@@ -52,59 +57,74 @@ export function AuthProvider({ children }) {
       setLoading(false)
       return
     }
-    const unsub = onAuthStateChanged(auth, async (u) => {
+
+    const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u)
+      // Phone fix: loading pehle band
+      setLoading(false)
+
       if (u) {
-        try {
-          const p = await ensureUserDoc(u)
-          setProfile(p)
-        } catch (e) {
-          console.error(e)
-          setProfile(null)
-        }
+        ensureUserDoc(u)
+          .then((p) => setProfile(p))
+          .catch((e) => {
+            console.error(e)
+            setProfile(null)
+          })
       } else {
         setProfile(null)
       }
-      setLoading(false)
     })
-    return () => unsub()
+
+    // Safety timeout
+    const t = setTimeout(() => setLoading(false), 5000)
+
+    return () => {
+      unsub()
+      clearTimeout(t)
+    }
   }, [])
 
-  const value = useMemo(() => ({
-    user,
-    profile,
-    loading,
-    configured: isFirebaseConfigured,
-    async login(email, password) {
-      if (!auth) throw new Error('Firebase not configured')
-      await signInWithEmailAndPassword(auth, email, password)
-    },
-    async signup({ email, password, username, displayName }) {
-      if (!auth) throw new Error('Firebase not configured')
-      const cred = await createUserWithEmailAndPassword(auth, email, password)
-      await updateProfile(cred.user, { displayName })
-      await ensureUserDoc(cred.user, { username, displayName })
-    },
-    async loginGoogle() {
-      if (!auth) throw new Error('Firebase not configured')
-      const provider = new GoogleAuthProvider()
-      const cred = await signInWithPopup(auth, provider)
-      await ensureUserDoc(cred.user)
-    },
-    async logout() {
-      if (!auth) return
-      await signOut(auth)
-    },
-    async resetPassword(email) {
-      if (!auth) throw new Error('Firebase not configured')
-      await sendPasswordResetEmail(auth, email)
-    },
-    refreshProfile: async () => {
-      if (!user || !db) return
-      const snap = await getDoc(doc(db, 'users', user.uid))
-      if (snap.exists()) setProfile(snap.data())
-    },
-  }), [user, profile, loading])
+  const value = useMemo(
+    () => ({
+      user,
+      profile,
+      loading,
+      configured: isFirebaseConfigured,
+      async login(email, password) {
+        if (!auth) throw new Error('Firebase not configured')
+        await signInWithEmailAndPassword(auth, email, password)
+      },
+      async signup({ email, password, username, displayName }) {
+        if (!auth) throw new Error('Firebase not configured')
+        const cred = await createUserWithEmailAndPassword(auth, email, password)
+        if (displayName) await updateProfile(cred.user, { displayName })
+        const p = await ensureUserDoc(cred.user, { username, displayName })
+        setProfile(p)
+        return p
+      },
+      async loginGoogle() {
+        if (!auth) throw new Error('Firebase not configured')
+        const cred = await signInWithPopup(auth, new GoogleAuthProvider())
+        const p = await ensureUserDoc(cred.user)
+        setProfile(p)
+        return p
+      },
+      async logout() {
+        if (auth) await signOut(auth)
+      },
+      async resetPassword(email) {
+        if (!auth) throw new Error('Firebase not configured')
+        await sendPasswordResetEmail(auth, email)
+      },
+      async refreshProfile() {
+        if (!auth?.currentUser) return null
+        const p = await ensureUserDoc(auth.currentUser)
+        setProfile(p)
+        return p
+      },
+    }),
+    [user, profile, loading]
+  )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
